@@ -32,6 +32,11 @@ class UserController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
+
+        if ($user === null) {
+            return $this->redirectToRoute("app_login");
+        }
+
         $registration = $this->registrationRepository->findOneBy([
             'owner' => $user
         ]);
