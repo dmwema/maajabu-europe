@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <main>
+
+        {% include 'partials/header.html.twig' %}
+
+        {% include 'partials/nav.html.twig' %}
+
+        <section class="ticket-section section-padding">
+            <div class="section-overlay"></div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-10 mx-auto mt-5">
+                        {% for message in app.session.flashBag.get('success') %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+
+                        <form class="custom-form ticket-form mb-5 mb-lg-0" role="form" method="post">
+                            <h3 class="text-center mb-4">Connectez-vous !</h3>
+                            <div class="mb-4">
+                                <small>Pas encore enrégistré ? <a href="{{ path("app_registration") }}">Enrégistrez-vous</a></small>
+                            </div>
+                            <div class="ticket-form-body">
+
+                            </div>
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    Vous êtes connecté entant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                                </div>
+                            {% endif %}
+
+                            <label for="inputEmail">Email</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            <label for="inputPassword">Password</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"
+                            >
+
+                            <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                            <button class="btn btn-lg btn-primary" type="submit">
+                                Connexion
+                            </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/footer.html.twig' %}
+
+{% endblock %}

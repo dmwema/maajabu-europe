@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <main>
+
+        {% include 'partials/header.html.twig' %}
+
+        {% include 'partials/nav.html.twig' %}
+
+        <section class="contact-section section-padding section" id="section_6">
+            <div class="container pt-4">
+                <a href="{{ path('app_logout') }}" class="btn custom-btn d-lg-inline-block">
+                    <i class="bi-arrow-90deg-left   "></i>
+                    <span>Se déconnecter</span>
+                </a>
+                <div class="row align-items-center">
+                    {% if videoSent %}
+                    <div class="col-md-6 mx-auto">
+                        <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
+                                 aria-labelledby="nav-ContactForm-tab">
+                                <h5 class="text-center mb-4">Vous devez payer <span style="color: green">1$</span> pour confirmer votre enrégistrement !</h5>
+                                ...
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel"
+                                 aria-labelledby="nav-ContactMap-tab">
+                                <iframe class="google-map"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29974.469402870927!2d120.94861466021855!3d14.106066818082482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd777b1ab54c8f%3A0x6ecc514451ce2be8!2sTagaytay%2C%20Cavite%2C%20Philippines!5e1!3m2!1sen!2smy!4v1670344209509!5m2!1sen!2smy"
+                                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <!-- You can easily copy the embed code from Google Maps -> Share -> Embed a map // -->
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-md-6 mx-auto">
+                        <div class="tab-content shadow-lg mt-5" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-ContactForm" role="tabpanel"
+                                 aria-labelledby="nav-ContactForm-tab">
+                                <h5 class="text-center mb-4">Ajouter la vidéo de votre prestation !</h5>
+                                {{ form_start(form) }}
+                                <div class="form-group">
+                                    <div class="custom-file">
+                                        {{ form_widget(form.video, {'attr': {'class': 'custom-file-input form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    {{ form_widget(form.submit, { 'attr': {'class': 'btn custom-btn'} }) }}
+                                </div>
+
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-ContactMap" role="tabpanel"
+                                 aria-labelledby="nav-ContactMap-tab">
+                                <iframe class="google-map"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29974.469402870927!2d120.94861466021855!3d14.106066818082482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd777b1ab54c8f%3A0x6ecc514451ce2be8!2sTagaytay%2C%20Cavite%2C%20Philippines!5e1!3m2!1sen!2smy!4v1670344209509!5m2!1sen!2smy"
+                                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <!-- You can easily copy the embed code from Google Maps -> Share -> Embed a map // -->
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="col-md-6 mx-auto text-white p-4">
+                        <li class="social-icon-item">
+                            <span class="{{ personalInformationSent ? 'bi-check-circle' : 'bi-x-circle' }}" style="color: {{ personalInformationSent ? 'lawngreen' : 'red' }}"></span>
+                            <span style="margin-left: 10px; color: {{ personalInformationSent ? 'lawngreen' : 'red' }}" >Informations personnelles enrégistrées</span>
+                        </li><br><br>
+                        <li class="social-icon-item">
+                            <span class="{{ videoSent ? 'bi-check-circle' : 'bi-x-circle' }}" style="color: {{ videoSent ? 'lawngreen' : 'red' }}"></span>
+                            <span style="margin-left: 10px; color: {{ videoSent ? 'lawngreen' : 'red' }}">Vidéo envoyée</span>
+                        </li><br><br>
+                        <li class="social-icon-item">
+                            <span class="{{ paid ? 'bi-check-circle' : 'bi-x-circle' }}" style="color: {{ paid ? 'lawngreen' : 'red' }}"></span>
+                            <span style="margin-left: 10px; color: {{ paid ? 'lawngreen' : 'red' }}">Paiement éffectué</span>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/footer.html.twig' %}
+
+{% endblock %}
