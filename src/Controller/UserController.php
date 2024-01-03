@@ -32,6 +32,7 @@ class UserController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
+        $videoError = null;
 
         if ($user === null) {
             return $this->redirectToRoute("app_login");
@@ -63,7 +64,7 @@ class UserController extends AbstractController
                 $originalFilename = $user->getFirstname() . " " . $user->getLastname();
                 $safeFilename = $this->slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-'. uniqid('', true) . '.' . $videoFile->getClientOriginalExtension();
-//                try {
+                try {
                     $videoFile->move(
                         $this->getParameter('videos_directory'),
                         $newFilename
@@ -77,12 +78,11 @@ class UserController extends AbstractController
                         ;
                         $this->registrationRepository->save($registration, true);
                     }
-//                } catch (FileException $e) {
-//                    // ... handle exception if something happens during file upload
-//                }
+                    return $this->redirectToRoute("app_user");
+                } catch (FileException $e) {
+                    $videoError = 'Vidéo trop volumineux';
+                }
             }
-
-            return $this->redirectToRoute("app_user");
         }
 
         return $this->render('user/profile.html.twig', [
@@ -90,7 +90,8 @@ class UserController extends AbstractController
             'personalInformationSent' => $personalInformationSent,
             'videoSent' => $videoSent,
             'paid' => $paid,
-            'user' => $user
+            'user' => $user,
+            'videoError' => $videoError
         ]);
     }
 }

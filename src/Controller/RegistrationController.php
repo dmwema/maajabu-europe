@@ -4,34 +4,36 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserFormType;
+use App\Repository\CountryRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
+use Symfony\Component\Validator\Validation;
 
 class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly TokenStorageInterface $tokenStorage
+        private readonly CountryRepository $countryRepository,
     ){}
 
     #[Route('/registration', name: 'app_registration')]
     public function index(Request $request): Response
     {
+        $validator = Validation::createValidator();
         if ($this->getUser() !== null) {
             return $this->redirectToRoute("app_user");
         }
         $form = $this->createForm(UserFormType::class);
 
+        $countries = $this->countryRepository->findAll();
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var User $user
              */
@@ -78,6 +80,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/index.html.twig', [
             'form' => $form,
+            'countries' => $countries
         ]);
     }
 }

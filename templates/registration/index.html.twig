@@ -35,24 +35,51 @@
                             </div>
                             <div class="ticket-form-body">
                                 {{ form_start(form) }}
+                                    {% if form_errors(form) %}
+                                        <div class="alert alert-danger">
+                                            {{ form_errors(form) }}
+                                        </div>
+                                    {% endif %}
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-12">
+                                            {{ form_label(form.firstname, 'Prénom', {
+                                                'label_attr': {'class': 'col-form-label'}
+                                            }) }}
                                             {{ form_widget(form.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
                                         </div>
 
                                         <div class="col-lg-6 col-md-6 col-12">
+                                            {{ form_label(form.lastname, 'Nom', {
+                                                'label_attr': {'class': 'col-form-label'}
+                                            }) }}
                                             {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'Prénom'} }) }}
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Adresse Email'} }) }}
-                                        </div>
+                                    {{ form_label(form.origin, 'Pays d\'origine', {
+                                        'label_attr': {'class': 'col-form-label'}
+                                    }) }}
+                                    {{ form_widget(form.origin, { 'attr': {'class': 'form-select form-control', 'placeholder': 'Sélectionnez votre pays d\'origine'} }) }}
 
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'} }) }}
-                                        </div>
+                                    {{ form_label(form.residence, 'Pays de résidence', {
+                                        'label_attr': {'class': 'col-form-label'}
+                                    }) }}
+                                    {{ form_widget(form.residence, { 'attr': {'class': 'form-select form-control', 'placeholder': 'Sélectionnez votre pays de résidence'} }) }}
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        {{ form_label(form.email, 'Adresse E-mail', {
+                                            'label_attr': {'class': 'col-form-label'}
+                                        }) }}
+                                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Adresse Email'} }) }}
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        {{ form_label(form.phoneNumber, 'Numéro de téléphone', {
+                                            'label_attr': {'class': 'col-form-label'}
+                                        }) }}
+                                        {{ form_widget(form.phoneNumber, { 'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'} }) }}
+                                    </div>
                                     </div>
 
                                     {{ form_label(form.birthday, 'Date de naissance', {
@@ -60,15 +87,21 @@
                                     }) }}
                                     {{ form_widget(form.birthday, { 'attr': {'class': 'form-control', 'placeholder': 'Date de naissance'} }) }}
 
-                                    {{ form_widget(form.address, { 'attr': {'class': 'form-control', 'placeholder': 'Adresse de résidence'} }) }}
-
-                                    {{ form_label(form.bio, 'Parlez brièvement de vous', {
+                                    {{ form_label(form.address, 'Adresse de résidence', {
                                         'label_attr': {'class': 'col-form-label'}
                                     }) }}
-                                    {{ form_widget(form.bio, { 'attr': {'class': 'form-control', 'placeholder': 'Bio'} }) }}
+                                    {{ form_widget(form.address, { 'attr': {'class': 'form-control', 'placeholder': 'Adresse de résidence'} }) }}
+
                                     <hr>
 
+                                    {{ form_label(form.password, 'Mot de passe', {
+                                        'label_attr': {'class': 'col-form-label'}
+                                    }) }}
                                     {{ form_widget(form.password, { 'attr': {'class': 'form-control', 'placeholder': 'Créez un mot de passe'} }) }}
+
+                                    {{ form_label(form.passwordConfirm, 'Confirmer le mot de passe', {
+                                        'label_attr': {'class': 'col-form-label'}
+                                    }) }}
                                     {{ form_widget(form.passwordConfirm, { 'attr': {'class': 'form-control', 'placeholder': 'Confirmez le mot de passe'} }) }}
 
 {#                                    <h6>Choose Ticket Type</h6>#}

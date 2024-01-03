@@ -44,11 +44,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $phoneNumber = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $bio = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $passwordConfirm = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Country $origin = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Country $residence = null;
 
     public function getId(): ?int
     {
@@ -180,18 +182,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBio(): ?string
-    {
-        return $this->bio;
-    }
-
-    public function setBio(?string $bio): static
-    {
-        $this->bio = $bio;
-
-        return $this;
-    }
-
     public function getPasswordConfirm(): ?string
     {
         return $this->passwordConfirm;
@@ -200,6 +190,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPasswordConfirm(?string $passwordConfirm): static
     {
         $this->passwordConfirm = $passwordConfirm;
+
+        return $this;
+    }
+
+    public function getOrigin(): ?Country
+    {
+        return $this->origin;
+    }
+
+    public function setOrigin(?Country $origin): static
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    public function getResidence(): ?Country
+    {
+        return $this->residence;
+    }
+
+    public function setResidence(?Country $residence): static
+    {
+        $this->residence = $residence;
 
         return $this;
     }
